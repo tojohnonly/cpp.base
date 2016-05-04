@@ -1,5 +1,5 @@
 
-#### 基本输入输出 ####
+##### 基本输入输出 #####
     void main()
 	{
 		int a,b,sum;
@@ -9,14 +9,14 @@
 		printf("Sum is %d\n",sum);
 	}
 
-#### 不同格式输出(o表示8进制,x表示16进制) ####
+##### 不同格式输出(o表示8进制,x表示16进制) #####
 	void main()
 	{
 		int a=8;int b=15;
 		printf("%o,%x,%s\n",a,b, "china");
 	}
 
-#### 基符号常量(简单文本替换) ####
+##### 基符号常量(简单文本替换) #####
 	#define PI 3.1415
 	void main()
 	{
@@ -26,7 +26,7 @@
 		printf("Area is %f",area);
 	}
 
-#### 数学函数 ####
+##### 数学函数 #####
 	#include<math.h>
 	void main()
 	{
@@ -38,7 +38,7 @@
 		printf("x=%5.2f\ty=%5.2f\n",x,y);
 	}
 
-#### 强制类型转换 ####
+##### 强制类型转换 #####
 	void main()
 	{
 		float f=5.63;
@@ -46,7 +46,7 @@
 		printf("(int)f=%d",i);
 	}
 
-#### 单个字符的输入和输出 ####
+##### 单个字符的输入和输出 #####
 	void main()
 	{
 		char c;
@@ -55,7 +55,7 @@
 		putchar('a'-32);
 	}
 
-#### 格式化输出 ####
+##### 格式化输出 #####
 	void main()
 	{
 		int a=121;
@@ -75,7 +75,7 @@
 		printf("%20s","Hello");
 	}
 
-#### 实数的输入输出 ####
+##### 实数的输入输出 #####
 	void main()
 	{
 		float fx,fy;
@@ -86,7 +86,7 @@
 		printf("%.4lf",dx);
 	}
 
-#### 字符串的输入输出 ####
+##### 字符串的输入输出 #####
 	void main()
 	{
 		char str1[10],str2[10];
@@ -95,7 +95,7 @@
 		printf("%-10s,%10s",str1,str2);
 	}
 
-#### if与switch语句 ####
+##### if与switch语句 #####
 	void main()
 	{
 		int a=2,b=3;
@@ -122,7 +122,7 @@
 		}
 	}
 
-#### while语句 ####
+##### while语句 #####
 	void main()
 	{
 		int i=0,sum=0;
@@ -134,7 +134,7 @@
 		printf("%d",sum);
 	}
 
-#### do,while语句 ####
+##### do,while语句 #####
 	void main()
 	{
 		int i=0,sum=0;
@@ -146,7 +146,7 @@
 		printf("%d",sum);
 	}
 
-#### for循环 ####
+##### for循环 #####
 	void main()
 	{
 		int i=0,sum=0;
@@ -155,7 +155,7 @@
 		printf("%d",sum);
 	}
 
-#### break与continue语句 ####
+##### break与continue语句 #####
 	void main()
 	{
 		int i=0,sum=0;
@@ -170,7 +170,7 @@
 		printf("%d",sum);
 	}
 
-#### 一维数组 ####
+##### 一维数组 #####
 	void main()
 	{
 		int a[5]={1,2,3,4,5};
@@ -183,7 +183,7 @@
 		printf("%d,%d",c[3],c[4]);
 	}
 
-#### 二维数组 ####
+##### 二维数组 #####
 	void main()
 	{
 		int a[2][3]={{1,2,3},{4,5,6}};
@@ -194,7 +194,7 @@
 				printf("%d,%d,%d\n",a[i][j],b[i][j],c[i][j]);
 	}
 
-#### 字符数组 ####
+##### 字符数组 #####
 	void main()
 	{
 		char a[5]={'h','e','l','l','o'};
@@ -208,7 +208,7 @@
 		printf("%s",a);
 	}
 
-#### 字符串函数 ####
+##### 字符串函数 #####
 	#include"string.h"
 	void main()
 	{
@@ -227,7 +227,7 @@
 			printf("b is bigger");
 	}
 
-#### 基本函数调用 ####
+##### 基本函数调用 #####
 	void main()
 	{
 		int Max(int a,int b);
@@ -238,7 +238,7 @@
 	int Max(int a,int b)
 	{	return a>b?a:b;	}
 
-#### 引用 ####
+##### 引用 #####
 
 >声明时必须初始化
 
@@ -251,7 +251,7 @@
 		printf("%d\n",a);
 	}
 
-#### 引用做参数 ####
+##### 引用做参数 #####
 	void Swap(int &a,int &b)
 	{
 		int temp=a;
@@ -266,7 +266,7 @@
 		printf("%a=%d,b=%d\n",a,b);
 	}
 
-#### 宏定义 ####
+##### 宏定义 #####
 
 >简单的文本替换，没有类型，不做任何类型检查
 
@@ -282,7 +282,7 @@
 		printf("%.2f\n",c);
 	}
 
-#### 条件编译 ####
+##### 条件编译 #####
 	#define DEBUG
 	void main()
 	{
@@ -302,7 +302,7 @@
 		#endif
 	}
 
-#### 指针 ####
+##### 指针 #####
 	void main()
 	{
 		int a=4,b=5;
@@ -355,7 +355,7 @@
 				printf("The biggest one is %d\n",max);
 	}
 	
-#### 函数指针(指向函数的指针) ####
+##### 函数指针(指向函数的指针) #####
 	int Max(int a,int b)
 	{	return a>b?a:b;	}
 	void main()
@@ -367,7 +367,7 @@
 		printf("The bigger one is %d\n",c);
 	}
 
-#### 指针型函数(返回值是指针) ####
+##### 指针型函数(返回值是指针) #####
 	char *GetDay(int number)
 	{
 		char*day[8]={"Illegalday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};  //指针数组
@@ -381,7 +381,7 @@
 		puts(GetDay(day));
 	}
 	
-#### 指向指针的指针 ####
+##### 指向指针的指针 #####
 	void main()
 	{
 		char *name[]={"John","Sophia","Mark","Marry"};
@@ -393,7 +393,7 @@
 		}
 	}
 
-#### 结构体 ####
+##### 结构体 #####
 	void main()
 	{
 		struct student{
@@ -407,7 +407,7 @@
 		printf("Name:%s , Number:%d , Score:%.1f \n",stup->name,stup->number,stup->score);
 	}
 
-#### 动态内存分配 ####
+##### 动态内存分配 #####
 	#include "stdlib.h"
 	#include "string.h"
 	struct student
@@ -428,7 +428,7 @@
 		free(p);
 	}
 
-#### 联合 ####
+##### 联合 #####
 	union myInfo
 	{
 		int age;
