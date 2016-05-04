@@ -27,7 +27,7 @@
 	int nLength = sprintf(szNum, "%0d", nNum); 
 
 #### stringstream ####
->\#include <sstream\>
+>\#include <sstream
 
 	int nNum = 30;
 	stringstream ssTmp;
