@@ -347,33 +347,121 @@
 
 ### sizeof()用法汇总 ###
 	sizeof()功能：计算数据空间的字节数
-	char str1[] = “Hello" ;
-	 char str2[5] = {'H','e','l','l','o'};  
-	char str3[6] = {'H','e','l','l','o','\0'}; 
-	char *p1 = "Hello";  
-	char *p2[]={"hello","world"};  
-	int n = 10; 
-	int *q = &n;  
-	sizeof (str1 ) = 6 (自动加了'\0')  
-	strlen (str1 ) = 5 (字符串的长度)  
-	sizeof (str2 ) = 5 (字符数组的大小)  
-	strlen (str2) = 未知 (该字符串缺少结束符'\0') 
-	sizeof (str3) = 6 (字符数组的大小) 
-	strlen (str3) = 5 (该字符串的长度为5)  
-	sizeof ( p1 ) = 4 (p1是一个指针，大小为4) 
-	sizeof ( p2 ) = 8 (p2是长度为2的字符串数组) 
-	sizeof ( n ) = 4 (整型大小为4)  
-	sizeof ( q ) = 4 (q是一个指针，大小为4) 
+	1.常规
+	char str1[] = “Hello” ;
+	char str2[5] = {'H','e','l','l','o'};
+	char str3[6] = {'H','e','l','l','o','\0'};
+	char *p1 = "Hello";
+	char *p2[]={"hello","world"}; 
+	int n = 10;
+	int *q = &n;
+	sizeof (str1 ) = 6 (自动加了'\0') 
+	strlen (str1 ) = 5 (字符串的长度) 
+	sizeof (str2 ) = 5 (字符数组的大小)
+	strlen (str2) = 未知 (该字符串缺少结束符'\0')
+	sizeof (str3) = 6 (字符数组的大小)
+	strlen (str3) = 5 (该字符串的长度为5)
+	sizeof ( p1 ) = 4 (p1是一个指针，大小为4)
+	sizeof ( p2 ) = 8 (p2是长度为2的字符串数组)
+	sizeof ( n ) = 4 (整型大小为4)
+	sizeof ( q ) = 4 (q是一个指针，大小为4)
+	2.动态分配内存
+	int *p = (int *)malloc( 100 );
+	sizeof ( p ) = 4 (p是一个指针，大小为4)
+	3.函数参数
+	void Function1( char p[],int num ){
+	sizeof ( p ) = 4 (数组在做为函数参数时均化为指针)
+	}
+	void Function2( int p[],int num ){
+	sizeof ( p ) = 4 (数组在做为函数参数时均化为指针)
+	}
+	4.多重继承
+	class A{};
+	class B{};
+	class C:public A,public B{};
+	class D:virtual public A{};
+	class E:virtual public A,virtual public B{};
+	sizeof ( A ) = 1 (空类大小为1,编译器安插一个char给空类，用来标记它的每一个对象)
+	sizeof ( B ) = 1 (空类大小为1,编译器安插一个char给空类，用来标记它的每一个对象)
+	sizeof ( C ) = 1 (继承或多重继承后空类大小还是1)
+	sizeof ( D ) = 4 (虚继承时编译器为该类安插一个指向父类的指针，指针大小为4）
+	sizeof ( E ) = 8 (指向父类A的指针与父类B的指针，加起来大小为8）
+	5.数据对齐
+	类(或结构)的大小必需为类中最大数据类型的整数倍.CPU访问对齐的数据的效率是最高的，因此通常编译浪费一些空间来使得我们的数据是对齐的
+	class A{
+	public:
+	int a;
+	};
+	class B{
+	public:
+	int a ;
+	char b;
+	};
+	class C{
+	public:
+	int a ;
+	char b;
+	char c;
+	};
+	sizeof(A) = 4 （内含一个int ，所以大小为4）
+	sizeof(B) = 8 (int为4，char为1，和为5，考虑到对齐，总大小为int的整数倍即8) 
+	sizeof(C) = 8 (同上)
+	6.函数与虚函数
+	编译器为每个有虚函数的类都建立一个虚函数表（其大小不计算在类中）,并为这个类安插一个指向虚函数表的指针，即每个有虚函数的类其大小至少为一个指针的大小4
+	class A{
+	public:
+	int a;
+	void Function();
+	};
+	class B{
+	public:
+	int a;
+	virtual void Function();
+	};
+	class C:public B{
+	public:
+	char b;
+	};
+	class D:public B{
+	public:
+	virtual void Function2();
+	};
+	class E{
+	public:
+	static void Function();
+	};
+	sizeof (A) = 4 (内含一个int,普通函数不占大小)
+	sizeof (B) = 8 (一个int ,一个虚函数表指针)
+	sizeof (C) =12 (一个int ,一个虚函数表指针，一个char ,再加上数据对齐)
+	sizeof (D) = 8 (一个int ,一个虚函数表指针,多个虚函数是放在一个表里的，所以虚函数表指针只要一个就行了)
+	sizeof (E) = 1 (static 函数不占大小,空类大小为1)
+	7.父类的私有数据
+	虽然在子类中不可用，但是是可见的，因此私有的数据还是要占子类的大小
+	class A{
+	private:
+	int a;
+	};
+	class B:public A{};
+	sizof(B) = 4; (内含一个不可用的父类的int）
+	8.大概就这么多了吧,想到再加吧。虚函数，多重继承，空类是比较复杂的，大家大概记住知道就行了
+	weiloujushi补充：
+	class static_D
+	{
+	int static intVar;
+	static void fun(){}
+	};
+	sizeof(static_D) ==1 //静态数据成员不计入类内
+	经典问题: 
+	double* (*a)[3][6]; 
+	cout<<sizeof(a)<<endl; // 4 a为指针
+	cout<<sizeof(*a)<<endl; // 72 *a为一个有3*6个指针元素的数组
+	cout<<sizeof(**a)<<endl; // 24 **a为数组一维的6个指针
+	cout<<sizeof(***a)<<endl; // 4 ***a为一维的第一个指针
+	cout<<sizeof(****a)<<endl; // 8 ****a为一个double变量
 
-经典问题: 
-
-	      double* (*a)[3][6]; 
-	      cout<<sizeof(a)<<endl; // 4 a为指针
-	      cout<<sizeof(*a)<<endl; // 72 *a为一个有3*6个指针元素的数组
-	      cout<<sizeof(**a)<<endl; // 24 **a为数组一维的6个指针
-	      cout<<sizeof(***a)<<endl; // 4 ***a为一维的第一个指针
-	      cout<<sizeof(****a)<<endl; // 8 ****a为一个double变量
-
->问题解析: a是一个很奇怪的定义, 他表示一个指向double\*\[3\]\[6\]类型数组的指针;   
->既然是指针, 所以sizeof(a)就是4; 既然a是执行double\*\[3\]\[6\]类型的指针, \*a就表示一个double\*\[3\]\[6\]的多维数组类型, 因此sizeof(*a)=3\*6\*sizeof(double\*)=72;   
->同样的, \*\*a表示一个double\*\[6\]类型的数组, 所以sizeof(\*\*a)=6\*sizeof  (double\*)=24; \*\*\*a就表示其中的一个元素, 也就是double\*了, 所以sizeof(\*\*\*a)=4; 至于\*\*\*\*a, 就是一个double了, 所以sizeof(\*\*\*\*a)=sizeof(double)=8; 
+	问题解析: a是一个很奇怪的定义, 他表示一个指向double*[3][6]类型数组的指针;   
+	既然是指针, 所以sizeof(a)就是4; 既然a是执行double*[3][6]类型的指针,
+	*a就表示一个double*[3][6]的多维数组类型, 因此sizeof(*a)=3*6*sizeof(double*)=72;   
+	同样的, **a表示一个double*[6]类型的数组, 所以sizeof(**a)=6*sizeof  (double*)=24;
+	***a就表示其中的一个元素, 也就是double*了, 所以sizeof(***a)=4; 
+	至于****a, 就是一个double了, 所以sizeof(****a)=sizeof(double)=8; 
