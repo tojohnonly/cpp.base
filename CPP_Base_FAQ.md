@@ -465,3 +465,13 @@
 	同样的, **a表示一个double*[6]类型的数组, 所以sizeof(**a)=6*sizeof  (double*)=24;
 	***a就表示其中的一个元素, 也就是double*了, 所以sizeof(***a)=4; 
 	至于****a, 就是一个double了, 所以sizeof(****a)=sizeof(double)=8; 
+
+
+### new malloc delete free 区别 ###
+
+1. delete 用于释放 new 分配的空间; free 用来释放 malloc 分配的空间; 
+2. delete[] 用于释放 new[] 分配的空间; 
+3. delete 释放空间的时候会调用相应的析构函数, 同时new时调用构造函数, 而malloc不会, 它只是分配内存;
+4. 调用free 之前需要检查 需要释放的指针是否为空，使用delete 释放内存则不需要检查指针是否为NULL
+5. malloc与free是C++/C语言的标准库函数, new/delete是C++的运算符, 它们都可用于申请动态内存和释放内存;
+> 对于非内部数据类型的对象而言，光用malloc/free无法满足动态对象的要求。对象在创建的同时要自动执行构造函数，对象在消亡之前要自动执行析构函数。由于malloc/free是库函数而不是运算符，不在编译器控制权限之内，不能够把执行构造函数和析构函数的任务强加于malloc/free。因此C++语言需要一个能完成动态内存分配和初始化工作的运算符new，以及一个能完成清理与释放内存工作的运算符delete。
